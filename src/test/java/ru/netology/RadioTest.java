@@ -1,3 +1,5 @@
+package ru.netology;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +30,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSetToNextStation() {
+    public void shouldSetNextStation() {
         Radio rad = new Radio();
 
         rad.setCurrentStation(9);
@@ -40,7 +42,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldSetToPrevStation() {
+    public void shouldSetPrevStation() {
         Radio rad = new Radio();
 
         rad.setCurrentStation(0);
@@ -64,12 +66,24 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotSetVolumeOutside() {
+    public void shouldNotSetVolumeUnderMax() {
         Radio rad = new Radio();
 
         rad.setCurrentVolume(101);
 
         int expected = 100;
+        int actual = rad.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotSetVolumeBelowMin() {
+        Radio rad = new Radio();
+
+        rad.setCurrentVolume(-1);
+
+        int expected = 0;
         int actual = rad.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
@@ -89,6 +103,19 @@ public class RadioTest {
     }
 
     @Test
+    public void shouldNotIncreaseVolume() {
+        Radio rad = new Radio();
+
+        rad.setCurrentVolume(100);
+        rad.increaseVolume();
+
+        int expected = 100;
+        int actual = rad.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldDecreaseVolume() {
         Radio rad = new Radio();
 
@@ -96,6 +123,19 @@ public class RadioTest {
         rad.decreaseVolume();
 
         int expected = 99;
+        int actual = rad.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotDecreaseVolume() {
+        Radio rad = new Radio();
+
+        rad.setCurrentVolume(0);
+        rad.decreaseVolume();
+
+        int expected = 0;
         int actual = rad.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
